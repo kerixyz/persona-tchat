@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Twitch Chat Analyzer</h2>
+            </div>
+            <div class="card-body">
+                <h4>Download Twitch Chat</h4>
+                <form id="downloadForm" method="post" action="/download_twitch">
+                    <div class="mb-3">
+                        <label for="twitch_urls" class="form-label">Twitch VOD URLs</label>
+                        <input type="text" class="form-control" id="twitch_urls" name="twitch_urls" 
+                               placeholder="https://www.twitch.tv/videos/123456789, https://www.twitch.tv/videos/987654321" required>
+                        <div class="form-text">Enter full Twitch VOD URLs separated by commas</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Download Chat</button>
+                </form>
+
+                <hr class="my-4">
+
+                <h4>Generate Personas</h4>
+                <form id="personaForm" method="post" action="/generate_personas">
+                    <div class="mb-3">
+                        <label for="vod_id" class="form-label">Select VOD</label>
+                        <select class="form-select" id="vod_id" name="vod_id" required>
+                            <option value="">Select a VOD</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="num_personas" class="form-label">Number of Personas</label>
+                        <input type="number" class="form-control" id="num_personas" name="num_personas" 
+                               value="3" min="1" max="10" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Generate Personas</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="results" class="mt-4" style="display: none;">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Results</h3>
+                </div>
+                <div class="card-body" id="resultsContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

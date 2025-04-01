@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Personas for Twitch VOD#{{ vod_id }}</h2>
+        <!-- <div class="mb-3">
+            <a href="/negative_comments/{{ youtube_id }}" class="btn btn-outline-danger">View Negative Comments</a>
+        </div> -->
+    </div>
+</div>
+
+<div class="row">
+    {% for persona in personas %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">{{ persona.name }}</h3>
+            </div>
+            <div class="card-body">
+                <h5>Description</h5>
+                <p>{{ persona.description }}</p>
+                
+                <!-- <h5>Characteristics</h5> -->
+                <!-- <ul>
+                    {% for characteristic in persona.characteristics %}
+                    <li>{{ characteristic }}</li>
+                    {% endfor %}
+                </ul> -->
+                
+                <h5>Summary</h5>
+                <p>{{ summaries[persona.name] }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

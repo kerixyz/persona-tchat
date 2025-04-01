@@ -1,0 +1,40 @@
+body {
+    background-color: #f8f9fa;
+    padding-bottom: 2rem;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.original-comment {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.25rem;
+}
+
+.useful-content {
+    background-color: #e7f5ea;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border-left: 4px solid #28a745;
+}
+
+/* Persona cards */
+.persona-card {
+    transition: transform 0.2s;
+}
+
+.persona-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Loading spinner */
+.spinner-border {
+    margin: 2rem auto;
+    display: block;
+}

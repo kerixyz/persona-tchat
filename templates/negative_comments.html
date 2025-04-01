@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Negative Comments for Video: {{ youtube_id }}</h2>
+        <div class="mb-3">
+            <a href="/view_personas/{{ youtube_id }}" class="btn btn-outline-primary">Back to Personas</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        {% for comment in comments %}
+        <div class="card mb-4">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">Negative Comment</h5>
+            </div>
+            <div class="card-body">
+                <div class="original-comment mb-3">
+                    <h6>Original Comment:</h6>
+                    <p>{{ comment.original }}</p>
+                </div>
+                <hr>
+                <div class="useful-content">
+                    <h6>Useful Content:</h6>
+                    <p>{{ comment.useful_content }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
