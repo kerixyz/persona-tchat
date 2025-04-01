@@ -15,7 +15,7 @@ def generate_personas(comments_df, num_personas=3):
     sample_comments = comments_df.sample(sample_size)['text'].tolist()
     
     prompt = f"""
-    Based on the following {sample_size} YouTube comments, identify {num_personas} distinct personas or viewpoint clusters.
+    Based on the following {sample_size} Twitch comments, identify {num_personas} distinct personas or viewpoint clusters.
     For each persona, provide:
     1. A short name/title
     2. A short 1 sentence description of their viewpoint 
