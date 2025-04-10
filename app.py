@@ -8,9 +8,7 @@ from utils.llm_processor import generate_personas, summarize_comments, extract_u
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
-# ========================
-# TWITCH ROUTES
-# ========================
+
 
 @app.route('/')
 def index():
