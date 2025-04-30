@@ -3,3 +3,4 @@ pandas
 OpenAI
 Flask
 gunicorn
+textblob

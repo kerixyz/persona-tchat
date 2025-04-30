@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Analysis for VOD {{ vod_id }}</h1>
+    
+    <!-- Summary Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2>Summary</h2>
+        </div>
+        <div class="card-body">
+            <p>{{ summaries.overall_summary }}</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Total Messages</h5>
+                    <p>{{ summaries.total_messages }}</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Unique Users</h5>
+                    <p>{{ summaries.unique_users }}</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Average Sentiment</h5>
+                    <p>{{ summaries.avg_sentiment }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h2>Audience Personas</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for persona in personas %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 persona-card">
+                        <div class="card-header">
+                            <h3>{{ persona.name }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ persona.description }}</p>
+                            <h5>Key Feedback:</h5>
+                            <ul>
+                                {% for feedback in persona.feedback %}
+                                <li>{{ feedback }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Negativity Analysis -->
+    <div class="card mb-4">
+        <div class="card-header bg-warning text-dark">
+            <h2>Reframing Negativity</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Left: Veiled Negativity Examples -->
+                <div class="col-md-6">
+                    <h5>
+                        <!-- Veiled Negativity Examples -->
+                        <span class="badge bg-secondary ms-2">
+                            Method: {{ negativity.method_used|upper }}
+                        </span>
+                    </h5>
+                    <ul class="list-group">
+                        {% for comment in negativity.examples %}
+                        <li class="list-group-item">
+                            <div class="original-comment mb-2 fw-bold text-danger">
+                                {{ comment.original }}
+                            </div>
+                            <div class="useful-content mb-1 text-success">
+                                {{ comment.neutralized }}
+                            </div>
+                            <small class="text-muted">
+                                <!-- If you store per-comment method, show here: -->
+                                {% if comment.method %}
+                                  ({{ comment.method|capitalize }} neutralization)
+                                {% endif %}
+                            </small>
+                        </li>        
+                        {% else %}
+                        <li class="list-group-item text-muted text-center">
+                            No negative messages found!
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- Right: Sentiment Distribution -->
+                <div class="col-md-6">
+                    <h5>Sentiment Distribution</h5>
+                    <canvas id="sentimentChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Counterfactual Suggestions -->
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h2>Counterfactual Suggestions</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for suggestion in suggestions %}
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5>{{ suggestion.title }}</h5>
+                            <p>{{ suggestion.description }}</p>
+                            <div class="mt-2">
+                                <span class="badge bg-primary">{{ suggestion.category }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Get data from backend
+    const sentimentLabels = {{ negativity.sentiment_labels | tojson }};
+    const sentimentValues = {{ negativity.sentiment_values | tojson }};
+    const hasSentimentData = sentimentValues.some(v => v > 0);
+
+    if (hasSentimentData) {
+        const ctx = document.getElementById('sentimentChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: sentimentLabels,
+                datasets: [{
+                    data: sentimentValues,
+                    backgroundColor: [
+                        '#ff6384', // Negative
+                        '#4bc0c0', // Neutral
+                        '#36a2eb'  // Positive
+                    ]
+                }]
+            }
+        });
+    } else {
+        // Replace the chart with a message
+        const chartContainer = document.getElementById('sentimentChart').parentNode;
+        chartContainer.innerHTML = '<div class="text-muted text-center py-5">No sentiment data available</div>';
+    }
+</script>
+
+{% endblock %}

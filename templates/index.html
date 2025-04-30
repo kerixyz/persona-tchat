@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="col-md-8 offset-md-2">
-        <div class="card">
+        <!-- <div class="card">
             <div class="card-header bg-primary text-white">
                 <h2 class="mb-0">Twitch Chat Analyzer</h2>
             </div>
@@ -37,8 +37,24 @@
                     <button type="submit" class="btn btn-success">Generate Personas</button>
                 </form>
             </div>
-        </div>
+        </div> -->
 
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Analyze Twitch VOD</h2>
+            </div>
+            <div class="card-body">
+                <form id="downloadForm" method="post" action="/download_twitch">
+                    <div class="mb-3">
+                        <label for="twitch_url" class="form-label">Twitch VOD URL</label>
+                        <input type="url" class="form-control" id="twitch_url" name="twitch_urls" 
+                               placeholder="https://www.twitch.tv/videos/123456789" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Analyze Chat</button>
+                </form>
+            </div>
+        </div>
+        
         <div id="results" class="mt-4" style="display: none;">
             <div class="card">
                 <div class="card-header bg-success text-white">

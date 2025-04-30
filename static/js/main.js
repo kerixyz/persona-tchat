@@ -22,38 +22,84 @@ function loadVods() {
 }
 
 function setupFormHandlers() {
-    // Download form
+    // // Download form
+    // const downloadForm = document.getElementById('downloadForm');
+    // if (downloadForm) {
+    //     downloadForm.addEventListener('submit', function(e) {
+    //         e.preventDefault();
+    //         const formData = new FormData(downloadForm);
+    //         const resultsDiv = document.getElementById('results');
+    //         const resultsContent = document.getElementById('resultsContent');
+            
+    //         resultsDiv.style.display = 'block';
+    //         resultsContent.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div><p>Downloading chat...</p></div>';
+            
+    //         fetch('/download_twitch', {
+    //             method: 'POST',
+    //             body: formData
+    //         })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             let html = '<h4>Results:</h4><ul>';
+    //             for (const [vodId, result] of Object.entries(data)) {
+    //                 const status = result.success ? 'success' : 'danger';
+    //                 html += `<li class="text-${status}">${vodId}: ${result.message}</li>`;
+    //             }
+    //             html += '</ul>';
+    //             resultsContent.innerHTML = html;
+    //             loadVods();
+    //         })
+    //         .catch(error => {
+    //             resultsContent.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+    //         });
+    //     });
+    // }
+
     const downloadForm = document.getElementById('downloadForm');
     if (downloadForm) {
-        downloadForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(downloadForm);
-            const resultsDiv = document.getElementById('results');
-            const resultsContent = document.getElementById('resultsContent');
-            
-            resultsDiv.style.display = 'block';
-            resultsContent.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div><p>Downloading chat...</p></div>';
-            
-            fetch('/download_twitch', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                let html = '<h4>Results:</h4><ul>';
-                for (const [vodId, result] of Object.entries(data)) {
-                    const status = result.success ? 'success' : 'danger';
-                    html += `<li class="text-${status}">${vodId}: ${result.message}</li>`;
-                }
-                html += '</ul>';
-                resultsContent.innerHTML = html;
-                loadVods();
-            })
-            .catch(error => {
-                resultsContent.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
-            });
+    downloadForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(downloadForm);
+        const resultsDiv = document.getElementById('results');
+        const resultsContent = document.getElementById('resultsContent');
+
+        resultsDiv.style.display = 'block';
+        resultsContent.innerHTML = `
+            <div class="text-center">
+                <div class="spinner-border" role="status"></div>
+                <p>Processing VOD...</p>
+            </div>
+        `;
+
+        fetch('/download_twitch', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.redirect_url) {
+                window.location.href = data.redirect_url;
+            } else {
+                resultsContent.innerHTML = `
+                    <div class="alert alert-danger">
+                        Error: ${data.message || "Unknown error"}
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            resultsContent.innerHTML = `
+                <div class="alert alert-danger">
+                    Error: ${error.message}
+                </div>
+            `;
         });
-    }
+    });
+}
+
 
     // Persona form
     const personaForm = document.getElementById('personaForm');
