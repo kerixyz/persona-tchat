@@ -1,1 +1,1 @@
-{"method_used": "llm", "examples": [], "sentiment_labels": ["Negative", "Neutral", "Positive"], "sentiment_values": [0, 0, 0]}
+{"examples": [{"original": "wtf", "neutralized": "What is happening?"}], "sentiment_labels": ["Negative", "Neutral", "Positive"], "sentiment_values": [4.2, 70.8, 25.0]}

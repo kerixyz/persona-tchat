@@ -7,4 +7,4 @@ OPENAI_MODEL = 'gpt-4o'
 MAX_COMMENTS_PER_VIDEO = 1000
 TWITCH_CLIENT_ID = os.environ.get('TWITCH_CLIENT_ID', '')
 TWITCH_CLIENT_SECRET = os.environ.get('TWITCH_CLIENT_SECRET', '')
-NEUTRALIZE_METHOD="llm" #or "manual"
+NEUTRALIZE_METHOD="manual" #or "manual"

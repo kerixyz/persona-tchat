@@ -1,40 +1,52 @@
+:root {
+    --primary-bg: #f8f9fa;
+    --card-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    --highlight: #28a745;
+    --persona-hover: 0 8px 24px rgba(40, 167, 69, 0.15);
+}
+
 body {
-    background-color: #f8f9fa;
+    background-color: var(--primary-bg);
     padding-bottom: 2rem;
+    transition: background 0.3s;
 }
 
 .card {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--card-shadow);
+    border-radius: 0.5rem;
+    transition: box-shadow 0.2s;
 }
 
 .card-header {
-    font-weight: bold;
+    font-weight: 600;
+    letter-spacing: 0.02em;
 }
 
 .original-comment {
-    background-color: #f8f9fa;
+    background: #fff3f3;
     padding: 1rem;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid #dc3545;
 }
 
 .useful-content {
-    background-color: #e7f5ea;
+    background: #e7f5ea;
     padding: 1rem;
-    border-radius: 0.25rem;
-    border-left: 4px solid #28a745;
+    border-radius: 0.5rem;
+    border-left: 4px solid var(--highlight);
 }
 
-/* Persona cards */
 .persona-card {
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .persona-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-7px) scale(1.03);
+    box-shadow: var(--persona-hover);
 }
 
-/* Loading spinner */
-.spinner-border {
-    margin: 2rem auto;
-    display: block;
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body { background: #23272b; color: #f8f9fa; }
+    .card, .original-comment, .useful-content { background: #2c3035; color: #f8f9fa; }
+    .card-header { background: #1a1d20 !important; color: #fff !important; }
 }

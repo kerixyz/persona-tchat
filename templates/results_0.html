@@ -12,7 +12,7 @@
             <h2 id="summary-title" class="mb-0">Summary</h2>
         </div>
         <div class="card-body">
-            <!-- <p>{{ summaries.overall_summary }}</p> -->
+            <p>{{ summaries.overall_summary }}</p>
             <div class="row text-center">
                 <div class="col-md-4 mb-2">
                     <h5>Total Messages</h5>
@@ -75,30 +75,27 @@
                             Method: {{ negativity.method_used|upper }}
                         </span>
                     </h5> -->
-                    <div style="max-height: 400px; overflow-y: auto;">
-                        <ul class="list-group">
-                            {% for comment in negativity.examples %}
-                            <li class="list-group-item">
-                                <div class="original-comment mb-2 fw-bold text-danger">
-                                    {{ comment.original }}
-                                </div>
-                                <div class="useful-content mb-1 text-success">
-                                    {{ comment.neutralized }}
-                                </div>
-                                <small class="text-muted">
-                                    {% if comment.method %}
-                                        ({{ comment.method|capitalize }} neutralization)
-                                    {% endif %}
-                                </small>
-                            </li>
-                            {% else %}
-                            <li class="list-group-item text-muted text-center">
-                                No negative messages found!
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    
+                    <ul class="list-group">
+                        {% for comment in negativity.examples %}
+                        <li class="list-group-item">
+                            <div class="original-comment mb-2 fw-bold text-danger">
+                                {{ comment.original }}
+                            </div>
+                            <div class="useful-content mb-1 text-success">
+                                {{ comment.neutralized }}
+                            </div>
+                            <small class="text-muted">
+                                {% if comment.method %}
+                                  ({{ comment.method|capitalize }} neutralization)
+                                {% endif %}
+                            </small>
+                        </li>
+                        {% else %}
+                        <li class="list-group-item text-muted text-center">
+                            No negative messages found!
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 <!-- Right: Sentiment Distribution -->
                 <div class="col-md-6">
@@ -114,21 +111,20 @@
         <div class="card-header bg-info text-white">
             <h2 id="suggestions-title" class="mb-0">Counterfactual Suggestions</h2>
         </div>
-        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-    <div class="row">
-        {% for suggestion in suggestions %}
-        <div class="col-md-6 mb-3">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <p><strong>Original:</strong> {{ suggestion.original }}</p>
-                    <p><strong>Suggestion:</strong> {{ suggestion.suggestion }}</p>
+        <div class="card-body">
+            <div class="row">
+                {% for suggestion in suggestions %}
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <p><strong>Original:</strong> {{ suggestion.original }}</p>
+                            <p><strong>Suggestion:</strong> {{ suggestion.suggestion }}</p>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
-        {% endfor %}
-    </div>
-</div>
-
     </section>
 
 </section>
